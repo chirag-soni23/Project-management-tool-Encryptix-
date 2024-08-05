@@ -95,7 +95,9 @@ function ProjectList() {
         const now = new Date();
         const end = new Date(deadline);
         const total = end - now;
-        const progress = (total / (end - new Date(end.getFullYear(), 0, 1))) * 100;
+        const start = new Date(end.getFullYear(), 0, 1); 
+        const yearTotal = end - start;
+        const progress = ((yearTotal - total) / yearTotal) * 100;
         return Math.max(0, Math.min(100, progress));
     };
     return (
@@ -179,4 +181,4 @@ function ProjectList() {
     );
 }
 
-export default ProjectList
+export default ProjectList;
