@@ -24,6 +24,7 @@ function ProjectList({ onSelectProject }) {
         const result = await axios.get('http://localhost:5000/api/projects/');
         setProjects(result.data);
     }
+    
     // Delete Project
     const deleteProject = async (projectId)=>{
         try {
@@ -75,11 +76,11 @@ function ProjectList({ onSelectProject }) {
                
             </div>
             <ul>
-                {projects.map((project) => (
-                    <li key={project._id} className="mb-4 p-4 border rounded">
-                        <h2 className="text-xl font-semibold">{project.name}</h2>
-                        <p>{project.description}</p>
-                        <p className="text-gray-500">{new Date(project.deadline).toLocaleDateString()}</p>
+                {projects.length > 0 ? projects.map((project) => (
+                    <li key={project._id} className="mb-4 p-4 border rounded ">
+                        <h2 className="mb-2 text-xl font-semibold"><b className='text-gray-500'>Name:</b> {project.name}</h2>
+                        <p className='mb-2'><b className='text-gray-500'>Description:</b> {project.description}</p>
+                        <p className="text-gray-500 mb-2"><b>Deadline:</b> {new Date(project.deadline).toLocaleDateString()}</p>
                         <div className="mt-2">
                             <div className="relative pt-1">
                                 <button
@@ -106,7 +107,7 @@ function ProjectList({ onSelectProject }) {
                             </div>
                         </div>
                     </li>
-                ))}
+                )) : <h1 className='tracking-tighter text-2xl'>No Project Here 📁 📁</h1>}
             </ul>
         </div>
     );
