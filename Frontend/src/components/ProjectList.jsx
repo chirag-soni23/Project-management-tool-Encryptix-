@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import swal from 'sweetalert2';
 import axios from 'axios';
 
 function ProjectList({ onSelectProject }) {
@@ -7,6 +8,22 @@ function ProjectList({ onSelectProject }) {
     const [description,setDescription] = useState('');
     const [deadline,setDeadline] = useState('');
 
+    // HandleDateChange
+    const todayDate = new Date().toISOString().split('T')[0];
+    const handleDatechange = (e) =>{
+        const selectedDate = e.target.value;
+        if(new Date(selectedDate) < new Date(todayDate)){
+            swal.fire({
+                icon: 'error',
+                title: 'Invalid Date',
+                text: 'Please select a future date.',
+            });
+            return;
+        }
+        setDeadline(selectedDate);
+    }
+
+    // Fetch Projects
     useEffect(()=>{
         const fetchProjects = async ()=>{
             const result = await axios.get('http://localhost:5000/api/projects/');
@@ -15,27 +32,66 @@ function ProjectList({ onSelectProject }) {
         fetchProjects();
     },[]);
 
+
     // Create Project
     const createProject = async () =>{
-        await axios.post('http://localhost:5000/api/projects',{name,description,deadline});
+        if (!name.trim() || !description.trim() || !deadline) {
+            swal.fire({
+                icon: 'error',
+                title: 'Missing Fields',
+                text: 'All fields are required',
+            });
+            return;
+        }
+        try {
+            await axios.post('http://localhost:5000/api/projects',{name,description,deadline});
         setName('');
         setDescription('');
         setDeadline('');
         const result = await axios.get('http://localhost:5000/api/projects/');
         setProjects(result.data);
+        swal.fire({
+            icon: 'success',
+            title: 'Project Created',
+            text: 'The project has been created successfully.',
+        });
+            
+        } catch (error) {
+            swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'There was an error creating the project.',
+            });
+            console.error('Error creating project:', error);
+        }
+        
     }
     
+
     // Delete Project
     const deleteProject = async (projectId)=>{
         try {
             await axios.delete(`http://localhost:5000/api/projects/${projectId}`);
             const result = await axios.get('http://localhost:5000/api/projects');
             setProjects(result.data);
+            swal.fire({
+                icon: 'success',
+                title: 'Project Deleted',
+                text: 'The project has been deleted successfully.',
+            });
             onSelectProject(null);
         } catch (error) {
+            swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'There was an error deleting the project.',
+            });
             console.error('Error deleting project:', error);
         }
     }
+
+
+    // Progress Bar
     const calculateProgress = (deadline) => {
         const now = new Date();
         const end = new Date(deadline);
@@ -64,7 +120,7 @@ function ProjectList({ onSelectProject }) {
                 <input
                     type="date"
                     value={deadline}
-                    onChange={(e) => setDeadline(e.target.value)}
+                    onChange={handleDatechange}
                     className="border p-2 mr-2"
                 />
                 <button
@@ -77,7 +133,7 @@ function ProjectList({ onSelectProject }) {
             </div>
             <ul>
                 {projects.length > 0 ? projects.map((project) => (
-                    <li key={project._id} className="mb-4 p-4 border rounded ">
+                    <li key={project._id} className="mb-4 p-4 border rounded">
                         <h2 className="mb-2 text-xl font-semibold"><b className='text-gray-500'>Name:</b> {project.name}</h2>
                         <p className='mb-2'><b className='text-gray-500'>Description:</b> {project.description}</p>
                         <p className="text-gray-500 mb-2"><b>Deadline:</b> {new Date(project.deadline).toLocaleDateString()}</p>
