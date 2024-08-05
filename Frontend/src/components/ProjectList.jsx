@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert2';
 import axios from 'axios';
 
-function ProjectList({ onSelectProject }) {
+function ProjectList() {
     const [projects,setProjects] = useState([]);
     const [name,setName] = useState('');
     const [description,setDescription] = useState('');
@@ -79,7 +79,6 @@ function ProjectList({ onSelectProject }) {
                 title: 'Project Deleted',
                 text: 'The project has been deleted successfully.',
             });
-            onSelectProject(null);
         } catch (error) {
             swal.fire({
                 icon: 'error',
