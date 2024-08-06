@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert2';
 import axios from 'axios';
+import UpdateModel from './UpdateModel';
 
 function ProjectList() {
     const [projects, setProjects] = useState([]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [deadline, setDeadline] = useState('');
+    const [selectedProject,setSelectedProject] = useState(null);
 
     // HandleDateChange
     const todayDate = new Date().toISOString().split('T')[0];
@@ -103,6 +105,19 @@ function ProjectList() {
     return (
         <div className="p-4">
             <h1 className="text-2xl text-center font-bold mb-4">Project Management Tool</h1>
+
+                {/* Update Model */}
+                {selectedProject && <UpdateModel 
+                project={selectedProject}
+                onClose={()=>setSelectedProject(null)}
+                onUpdate={()=>{
+                    const fetchProjects = async ()=>{
+                        const result = await axios.get('http://localhost:5000/api/projects/');
+                        setProjects(result.data);
+                    }
+                    fetchProjects();
+                }}
+                />}
             <div className=" mb-4">
                 <div className="flex items-center mb-2">
                     <label className="mr-2 text-sm font-medium">Enter Project Name:</label>
@@ -150,13 +165,21 @@ function ProjectList() {
                         <p className='mb-2'><b className='text-gray-500'>Description:</b> {project.description}</p>
                         <p className="text-gray-500 mb-2"><b>Deadline:</b> {new Date(project.deadline).toLocaleDateString()}</p>
                         <div className="mt-2">
-                            <div className="relative pt-1">
+                            <div className="relative pt-1 ">
+                                <div className='flex justify-between items-center'>
                                 <button
                                     onClick={() => deleteProject(project._id)}
                                     className="bg-red-500 mb-2 text-white p-1 rounded"
-                                >
+                                    >
                                     Delete Project
                                 </button>
+                                <button
+                                    onClick={() => setSelectedProject(project)}
+                                    className="bg-yellow-500 text-white p-1 rounded"
+                                    >
+                                    Update Project
+                                </button>
+                                    </div>
                                 <div className="flex mb-2 items-center justify-between">
                                     <div className="text-xs font-semibold inline-block py-1 px-2 rounded text-teal-600 bg-teal-200">
                                         Progress
