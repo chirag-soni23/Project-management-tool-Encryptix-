@@ -8,7 +8,7 @@ function ProjectList() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [deadline, setDeadline] = useState('');
-    const [selectedProject,setSelectedProject] = useState(null);
+    const [selectedProject, setSelectedProject] = useState(null);
 
     // HandleDateChange
     const todayDate = new Date().toISOString().split('T')[0];
@@ -97,7 +97,7 @@ function ProjectList() {
         const now = new Date();
         const end = new Date(deadline);
         const total = end - now;
-        const start = new Date(end.getFullYear(), 0, 1); 
+        const start = new Date(end.getFullYear(), 0, 1);
         const yearTotal = end - start;
         const progress = ((yearTotal - total) / yearTotal) * 100;
         return Math.max(0, Math.min(100, progress));
@@ -106,18 +106,18 @@ function ProjectList() {
         <div className="p-4">
             <h1 className="text-2xl text-center font-bold mb-4">Project Management Tool</h1>
 
-                {/* Update Model */}
-                {selectedProject && <UpdateModel 
+            {/* Update Model */}
+            {selectedProject && <UpdateModel
                 project={selectedProject}
-                onClose={()=>setSelectedProject(null)}
-                onUpdate={()=>{
-                    const fetchProjects = async ()=>{
+                onClose={() => setSelectedProject(null)}
+                onUpdate={() => {
+                    const fetchProjects = async () => {
                         const result = await axios.get('http://localhost:5000/api/projects/');
                         setProjects(result.data);
                     }
                     fetchProjects();
                 }}
-                />}
+            />}
             <div className=" mb-4">
                 <div className="flex items-center mb-2">
                     <label className="mr-2 text-sm font-medium">Enter Project Name:</label>
@@ -148,12 +148,12 @@ function ProjectList() {
                         onChange={handleDatechange}
                         className="border p-2"
                     />
-                <button
-                    onClick={createProject}
-                    className="bg-blue-500  text-white p-2 rounded"
-                >
-                    Add Project
-                </button>
+                    <button
+                        onClick={createProject}
+                        className="bg-blue-500  text-white p-2 rounded"
+                    >
+                        Add Project
+                    </button>
                 </div>
 
 
@@ -165,21 +165,21 @@ function ProjectList() {
                         <p className='mb-2'><b className='text-gray-500'>Description:</b> {project.description}</p>
                         <p className="text-gray-500 mb-2"><b>Deadline:</b> {new Date(project.deadline).toLocaleDateString()}</p>
                         <div className="mt-2">
-                            <div className="relative pt-1 ">
+                            <div className='relative pt-1'>
                                 <div className='flex justify-between items-center'>
-                                <button
-                                    onClick={() => deleteProject(project._id)}
-                                    className="bg-red-500 mb-2 text-white p-1 rounded"
+                                    <button
+                                        onClick={() => deleteProject(project._id)}
+                                        className="bg-red-500 mb-2 text-white p-1 rounded"
                                     >
-                                    Delete Project
-                                </button>
-                                <button
-                                    onClick={() => setSelectedProject(project)}
-                                    className="bg-yellow-500 text-white p-1 rounded"
+                                        Delete Project
+                                    </button>
+                                    <button
+                                        onClick={() => setSelectedProject(project)}
+                                        className="bg-yellow-500 text-white p-1 rounded"
                                     >
-                                    Update Project
-                                </button>
-                                    </div>
+                                        Update Project
+                                    </button>
+                                </div>
                                 <div className="flex mb-2 items-center justify-between">
                                     <div className="text-xs font-semibold inline-block py-1 px-2 rounded text-teal-600 bg-teal-200">
                                         Progress
@@ -199,6 +199,8 @@ function ProjectList() {
                         </div>
                     </li>
                 )) : <h1 className='tracking-tighter text-2xl'>No Project Here 📁 📁</h1>}
+
+
             </ul>
         </div>
     );
