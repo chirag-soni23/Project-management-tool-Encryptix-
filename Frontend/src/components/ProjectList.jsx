@@ -186,17 +186,17 @@ function ProjectList() {
                                         Update Project
                                     </button>
                                 </div>
-                                <div className="flex mb-2 items-center justify-between">
+                                <div className="flex mt-2 items-center justify-between">
                                     <div className="text-xs font-semibold inline-block py-1 px-2 rounded text-teal-600 bg-teal-200">
                                         Progress
                                     </div>
-                                    <div className="text-xs font-semibold inline-block py-1 px-2 rounded text-teal-600 bg-teal-200">
+                                    <div className="mt-2 text-xs font-semibold inline-block py-1 px-2 rounded text-teal-600 bg-teal-200">
                                         {calculateProgress(project.deadline).toFixed(2)}%
                                     </div>
                                 </div>
                                 <div className="flex">
                                     <div
-                                        className="bg-teal-600 text-xs leading-none py-1 text-center text-white rounded"
+                                        className="bg-teal-600 text-xs leading-none py-1 text-center mt-2 text-white rounded"
                                         style={{ width: `${calculateProgress(project.deadline)}%` }}
                                     >
                                     </div>
