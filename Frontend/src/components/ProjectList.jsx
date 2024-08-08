@@ -118,9 +118,10 @@ function ProjectList() {
                     fetchProjects();
                 }}
             />}
-            <div className=" mb-4">
-                <div className="flex items-center mb-2">
-                    <label className="mr-2 text-sm font-medium">Enter Project Name:</label>
+            <div className="mb-4">
+                {/* Project Name Input */}
+                <div className="flex flex-col mb-4">
+                    <label className="text-sm font-medium mb-1">Enter Project Name:</label>
                     <input
                         type="text"
                         placeholder="Project Name"
@@ -129,8 +130,10 @@ function ProjectList() {
                         className="border p-2 w-full max-w-xs"
                     />
                 </div>
-                <div className="flex items-center mb-2">
-                    <label className="mr-2 text-sm font-medium">Enter Description:</label>
+
+                {/* Description */}
+                <div className="flex flex-col mb-4">
+                    <label className="text-sm font-medium mb-1">Enter Description:</label>
                     <input
                         type="text"
                         placeholder="Description"
@@ -139,25 +142,28 @@ function ProjectList() {
                         className="border p-2 w-full max-w-xs"
                     />
                 </div>
-                <div className="flex gap-2 items-center mb-4">
-                    <label className="mr-2 text-sm font-medium">Select Deadline Date:</label>
+
+                {/* Deadline Date */}
+                <div className="flex flex-col mb-4">
+                    <label className="text-sm font-medium mb-1">Select Deadline Date:</label>
                     <input
                         type="date"
                         value={deadline}
                         min={todayDate}
                         onChange={handleDatechange}
-                        className="border p-2"
+                        className="border p-2 w-full max-w-xs"
                     />
-                    <button
-                        onClick={createProject}
-                        className="bg-blue-500  text-white p-2 rounded"
-                    >
-                        Add Project
-                    </button>
                 </div>
 
-
+                <button
+                    onClick={createProject}
+                    className="bg-blue-500 text-white p-2 rounded"
+                >
+                    Add Project
+                </button>
             </div>
+
+
             <ul>
                 {projects.length > 0 ? projects.map((project) => (
                     <li key={project._id} className="mb-4 p-4 border rounded">
