@@ -10,14 +10,14 @@ connectDB();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+    res.send("Hello")
+})
 
 // Routers
 const projectRoutes = require('./routes/projectRoutes.js');
-// const taskRoutes = require('./routes/taskRoutes.js');
+app.use('/api/projects', projectRoutes);
 
-app.use('/api/projects',projectRoutes);
-// app.use('/api/tasks',taskRoutes);
-
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
