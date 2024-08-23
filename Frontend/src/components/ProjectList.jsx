@@ -46,6 +46,7 @@ function ProjectList() {
             return;
         }
         try {
+            if(confirm("Are you sure you want to create the project?")){
             await axios.post('http://localhost:5000/api/projects', { name, description, deadline });
             setName('');
             setDescription('');
@@ -57,6 +58,7 @@ function ProjectList() {
                 title: 'Project Created',
                 text: 'The project has been created successfully.',
             });
+        }
 
         } catch (error) {
             swal.fire({
@@ -73,14 +75,16 @@ function ProjectList() {
     // Delete Project
     const deleteProject = async (projectId) => {
         try {
+            if(confirm("Are you sure you want to delete the project?")){
             await axios.delete(`http://localhost:5000/api/projects/${projectId}`);
             const result = await axios.get('http://localhost:5000/api/projects');
             setProjects(result.data);
-            swal.fire({
-                icon: 'success',
-                title: 'Project Deleted',
-                text: 'The project has been deleted successfully.',
-            });
+                swal.fire({
+                    icon: 'success',
+                    title: 'Project Deleted',
+                    text: 'The project has been deleted successfully.',
+                });
+            }
         } catch (error) {
             swal.fire({
                 icon: 'error',

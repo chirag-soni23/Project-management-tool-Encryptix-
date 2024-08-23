@@ -13,10 +13,10 @@ app.use(express.json());
 
 // Routers
 const projectRoutes = require('./routes/projectRoutes.js');
-const taskRoutes = require('./routes/taskRoutes.js');
+// const taskRoutes = require('./routes/taskRoutes.js');
 
 app.use('/api/projects',projectRoutes);
-app.use('/api/tasks',taskRoutes);
+// app.use('/api/tasks',taskRoutes);
 
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
