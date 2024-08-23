@@ -28,7 +28,7 @@ function ProjectList() {
     // Fetch Projects
     useEffect(() => {
         const fetchProjects = async () => {
-            const result = await axios.get('http://localhost:5000/api/projects/');
+            const result = await axios.get('https://project-management-tool-encryptix.onrender.comapi/api/projects/');
             setProjects(result.data);
         }
         fetchProjects();
@@ -47,11 +47,11 @@ function ProjectList() {
         }
         try {
             if(confirm("Are you sure you want to create the project?")){
-            await axios.post('http://localhost:5000/api/projects', { name, description, deadline });
+            await axios.post('https://project-management-tool-encryptix.onrender.com/api/projects', { name, description, deadline });
             setName('');
             setDescription('');
             setDeadline('');
-            const result = await axios.get('http://localhost:5000/api/projects/');
+            const result = await axios.get('https://project-management-tool-encryptix.onrender.com/api/projects/');
             setProjects(result.data);
             swal.fire({
                 icon: 'success',
@@ -76,8 +76,8 @@ function ProjectList() {
     const deleteProject = async (projectId) => {
         try {
             if(confirm("Are you sure you want to delete the project?")){
-            await axios.delete(`http://localhost:5000/api/projects/${projectId}`);
-            const result = await axios.get('http://localhost:5000/api/projects');
+            await axios.delete(`https://project-management-tool-encryptix.onrender.com/api/projects/${projectId}`);
+            const result = await axios.get('https://project-management-tool-encryptix.onrender.com/api/projects');
             setProjects(result.data);
                 swal.fire({
                     icon: 'success',
@@ -116,7 +116,7 @@ function ProjectList() {
                 onClose={() => setSelectedProject(null)}
                 onUpdate={() => {
                     const fetchProjects = async () => {
-                        const result = await axios.get('http://localhost:5000/api/projects/');
+                        const result = await axios.get('https://project-management-tool-encryptix.onrender.com/api/projects/');
                         setProjects(result.data);
                     }
                     fetchProjects();
