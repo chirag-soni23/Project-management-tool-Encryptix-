@@ -43,7 +43,7 @@ function UpdateModel({project,onClose,onUpdate}) {
             return;
         };
         try {
-            await axios.put(`https://project-management-tool-encryptix.onrender.com/api/projects/${project._id}`,{name,description,deadline});
+            await axios.put(`http://localhost:5000/api/projects/${project._id}`,{name,description,deadline});
             onUpdate();
             onClose();
             swal.fire({
